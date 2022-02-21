@@ -20,6 +20,8 @@ def download_file():
     user_path = path_label.cget("text")
     # Download video
     mp4_video = Youtube(get_link).streams.get_highest_resoltuion().download()
+    vid_clip = VideoFileClip(mp4_video)
+    vid_clip.close()
 
 
 screen = Tk()
@@ -51,7 +53,7 @@ select_btn = Button(screen, text='Select', command=select_path)
 canvas.create_window(250, 320, window=path_label)
 canvas.create_window(250, 360, window=select_btn)
 
-download_btn = Button(screen, text="Download File")
+download_btn = Button(screen, text="Download File", command=download_file)
 
 canvas.create_window(250, 400, window=download_btn)
 screen.mainloop()
