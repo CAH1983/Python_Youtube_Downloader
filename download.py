@@ -3,6 +3,7 @@ from tkinter import filedialog
 from moviepy import *
 from moviepy.editor import VideoFileClip
 from pytube import YouTube
+import shutil
 
 # functions
 
@@ -19,10 +20,12 @@ def download_file():
     # get selected path
     user_path = path_label.cget("text")
     # Download video
+    screen.title('Downloading ...')
     mp4_video = YouTube(get_link).streams.get_highest_resolution().download()
     vid_clip = VideoFileClip(mp4_video)
     vid_clip.close()
-    screen.title('DOwnload complete! Download another file ..?')
+    shutil.move(mp4_video, user_path)
+    screen.title('Download complete! Download another file ..?')
 
 
 screen = Tk()
