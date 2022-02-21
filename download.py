@@ -19,9 +19,10 @@ def download_file():
     # get selected path
     user_path = path_label.cget("text")
     # Download video
-    mp4_video = Youtube(get_link).streams.get_highest_resoltuion().download()
+    mp4_video = YouTube(get_link).streams.get_highest_resolution().download()
     vid_clip = VideoFileClip(mp4_video)
     vid_clip.close()
+    screen.title('DOwnload complete! Download another file ..?')
 
 
 screen = Tk()
