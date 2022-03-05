@@ -28,9 +28,12 @@ def download_file():
     screen.title('Download complete! Download another file ..?')
 
 
+# styling
+font_color = 'white'
+background_color = '#50808e'
 screen = Tk()
 title = screen.title('Youtube downloader')
-canvas = Canvas(screen, width=500, height=500)
+canvas = Canvas(screen, width=500, height=500, bg=background_color)
 canvas.pack()
 
 # image logo
@@ -43,7 +46,7 @@ canvas.create_image(255, 100, image=logo_img)
 
 # configure the label and input
 link_label = Label(
-    screen, text='Enter / Paste link to download: ', font=('Arial', 15))
+    screen, text='Enter / Paste link to download: ', font=('Arial', 15), bg=background_color, fg=font_color)
 link_field = Entry(screen, width=50)
 
 # Add label and input to window
@@ -51,13 +54,19 @@ canvas.create_window(250, 260, window=link_label)
 canvas.create_window(250, 290, window=link_field)
 
 # Select path for where to save the file on the computer
-path_label = Label(screen, text='Select path for download', font=('Arial', 13))
+path_label = Label(screen, text='Select path for download', font=(
+    'Arial', 13),  bg=background_color, fg=font_color)
 select_btn = Button(screen, text='Select', command=select_path)
 
 canvas.create_window(250, 320, window=path_label)
 canvas.create_window(250, 360, window=select_btn)
 
-download_btn = Button(screen, text="Download File", command=download_file)
+download_btn = Button(screen, text="Download File",
+                      command=download_file, bg='#cae9ff')
+
+download_playlist_btn = Button(
+    screen, text="Download Playlist", bg='#ffd5c2')
 
 canvas.create_window(250, 400, window=download_btn)
+canvas.create_window(250, 440, window=download_playlist_btn)
 screen.mainloop()
