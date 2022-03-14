@@ -39,6 +39,7 @@ def download_playlist_MP3_only():
     # get user path
     user_directory = path_label.cget('text')
     playlist = Playlist(playlist_link)
+    # looping through each video
     for video in playlist.videos:
         print('Downloading: {} with url: {}'.format(
             video.title, video.watch_url))
