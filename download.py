@@ -17,7 +17,7 @@ def select_path():
     path_label.config(text=path)
 
 
-def download_file():
+def download_1file_MP4():
     # get user path
     get_link = link_field.get()
     # get selected path
@@ -32,8 +32,8 @@ def download_file():
 
 
 # download whole playlist in MP3 audio
-def download_playlist_MP3_only():
-    print('downloading playlist clicked')
+def download_playlist_MP4():
+    print('Downloading playlist MP4 ...')
     screen.title('started downloading playlist ...')
     playlist_link = link_field.get()
     # get user path
@@ -45,12 +45,14 @@ def download_playlist_MP3_only():
             video.title, video.watch_url))
         screen.title('downloading ...')
         video.streams.\
-            filter(type='video', progressive=True, file_extension='mp4').\
-            order_by('resolution').\
-            desc().\
+            filter(only_audio=True).\
             first().\
             download(user_directory)
     print('finished downloading!')
+
+
+def download_playlist_MP3():
+    print('Downloading playlist MP3 ...')
 
 
 # styling
@@ -87,12 +89,16 @@ select_btn = Button(screen, text='Select', command=select_path)
 canvas.create_window(250, 460, window=path_label)
 canvas.create_window(250, 490, window=select_btn)
 
-download_btn = Button(screen, text="Download File",
-                      command=download_file, bg='#cae9ff')
+download_1File_MP4_btn = Button(screen, text="Download only 1 File MP4",
+                                command=download_1file_MP4, bg='#cae9ff')
 
-download_playlist_btn = Button(
-    screen, text="Download Playlist", bg='#ffd5c2', command=download_playlist_MP3_only)
+download_playlist_MP4_btn = Button(
+    screen, text="Download Full Playlist MP4", bg='#ffd5c2', command=download_playlist_MP4)
 
-canvas.create_window(250, 540, window=download_btn)
-canvas.create_window(250, 570, window=download_playlist_btn)
+download_playlist_MP3_btn = Button(
+    screen, text="Download Full Playlist MP3", bg='#ffd5c2', command=download_playlist_MP3)
+
+canvas.create_window(250, 540, window=download_1File_MP4_btn)
+canvas.create_window(250, 570, window=download_playlist_MP4_btn)
+canvas.create_window(250, 600, window=download_playlist_MP3_btn)
 screen.mainloop()
