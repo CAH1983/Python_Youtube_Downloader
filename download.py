@@ -8,6 +8,7 @@ from pytube import Playlist
 import shutil
 import ffmpy
 
+
 # functions
 
 
@@ -21,23 +22,23 @@ def download_1file_MP4():
     # get user path
     get_link = link_field.get()
     # get selected path
-    user_path = path_label.cget("text")
+    download_directory = path_label.cget("text")
     # Download video
     screen.title('Downloading ...')
     mp4_video = YouTube(get_link).streams.get_highest_resolution().download()
     vid_clip = VideoFileClip(mp4_video)
     vid_clip.close()
-    shutil.move(mp4_video, user_path)
+    shutil.move(mp4_video, download_directory)
     screen.title('Download complete! Download another file ..?')
 
 
 # download whole playlist in MP3 audio
 def download_playlist_MP4():
     print('Downloading playlist MP4 ...')
-    screen.title('started downloading playlist ...')
+    screen.title('started downloading playlist in MP4 ...')
     playlist_link = link_field.get()
     # get user path
-    user_directory = path_label.cget('text')
+    download_directory = path_label.cget('text')
     playlist = Playlist(playlist_link)
     # looping through each video
     for video in playlist.videos:
@@ -47,12 +48,34 @@ def download_playlist_MP4():
         video.streams.\
             filter(only_audio=True).\
             first().\
-            download(user_directory)
+            download(download_directory)
     print('finished downloading!')
 
 
 def download_playlist_MP3():
-    print('Downloading playlist MP3 ...')
+    screen.title('started downloading playlist in MP3')
+    playlist_link = link_field.get()
+
+    playlist = Playlist(playlist_link)
+    download_directory = path_label.cget('text')
+
+    for video in playlist.videos:
+        print('Downloading playlist MP3 ...')
+        audio = video.streams.get_audio_only()
+        audio.download(download_directory)
+
+        video_title = video.title
+
+        new_filename = video_title + '.mp3'
+        default_filename = video_title + '.mp4'
+
+        print('from' + default_filename + 'to' + new_filename)
+        ff = ffmpy.FFmpeg(
+            inputs={default_filename: None},
+            outputs={new_filename: None}
+        )
+
+        ff.run()
 
 
 # styling
